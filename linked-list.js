@@ -32,8 +32,8 @@ class LinkedList {
       this.headNode = newNode;
       this.tailNode = newNode;
     } else {
-      newNode.next = this.headNode.next;
-      this.headNode.next = newNode;
+      newNode.next = this.headNode;
+      this.headNode = newNode;
     }
   }
 
@@ -120,6 +120,7 @@ class LinkedList {
 // newList.append(5);
 // newList.append(6);
 // newList.pop();
+// newList.prepend(999)
 // console.log(newList.find(77));
 // console.log(newList.contains(6));
 
