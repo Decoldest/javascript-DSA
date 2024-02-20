@@ -109,19 +109,24 @@ class LinkedList {
   }
 
   removeAt(index) {
-    if (index > this.nodeSize - 1) {
-      return "Invalid index";
+    if (index === null || index > this.nodeSize - 1) {
+      return false;
     }
-    if (index === this.nodeSize - 1) {
-      this.pop();
-    } else if (index === 0) {
+    this.nodeSize--;
+    if (index === 0) {
       this.headNode = this.headNode.next;
+      if(!this.nodeSize) {
+        this.tailNode = null;
+      }
+    }
+    else if (index === this.nodeSize - 1) {
+      this.pop();
     } else {
       const nodeBefore = this.at(index - 1);
       const removeNode = this.at(index);
-      console.log(nodeBefore);
       nodeBefore.next = removeNode.next;
     }
+    return true;
   }
 
   toString() {
@@ -138,19 +143,19 @@ class LinkedList {
   }
 }
 
-let test = new Node();
-let newList = new LinkedList();
-newList.append(1);
-newList.append(1);
-newList.append(4);
-newList.append(5);
-newList.append(6);
-newList.append(7);
-newList.insertAt(999, 2);
-console.log(newList.toString());
+// let test = new Node();
+// let newList = new LinkedList();
+// newList.append(1);
+// newList.append(1);
+// newList.append(4);
+// newList.append(5);
+// newList.append(6);
+// newList.append(7);
+// newList.insertAt(999, 2);
+// console.log(newList.toString());
 
-console.log(newList.size());
+// console.log(newList.size());
 
-newList.removeAt(6);
+// newList.removeAt(6);
 
-console.log(newList.toString());
+// console.log(newList.toString());

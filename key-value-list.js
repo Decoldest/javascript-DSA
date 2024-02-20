@@ -104,7 +104,7 @@ class LinkedList {
 
   contains(value) {
     return this.find(value) !== null;
-  } 
+  }
 
   containsKey(key) {
     return this.findKey(key) !== null;
@@ -117,7 +117,7 @@ class LinkedList {
 
   insertAt(key, value, index) {
     if (index > this.nodeSize) {
-      return "Invalid index";
+      return null;
     }
     this.nodeSize++;
     if (index === 0) {
@@ -134,18 +134,21 @@ class LinkedList {
   }
 
   removeAt(index) {
-    if (!index || index > this.nodeSize - 1) {
-      console.log("false bitch");
+    if (index === null || index > this.nodeSize - 1) {
       return false;
     }
-    if (index === this.nodeSize - 1) {
-      this.pop();
-    } else if (index === 0) {
+    this.nodeSize--;
+    if (index === 0) {
       this.headNode = this.headNode.next;
+      if(!this.nodeSize) {
+        this.tailNode = null;
+      }
+    }
+    else if (index === this.nodeSize - 1) {
+      this.pop();
     } else {
       const nodeBefore = this.at(index - 1);
       const removeNode = this.at(index);
-      console.log(nodeBefore);
       nodeBefore.next = removeNode.next;
     }
     return true;
@@ -165,7 +168,6 @@ class LinkedList {
   getAllValues() {
     let valuesArray = [];
     let current = this.headNode;
-
     while (current) {
       valuesArray.push(current.value);
       current = current.next;
@@ -201,14 +203,14 @@ class LinkedList {
 module.exports = LinkedList;
 
 let newList = new LinkedList();
-// newList.append(1,1);
-// newList.append(1,2);
-// newList.append(4,4);
-// newList.append(5,1);
-// newList.append(6,2);
-// newList.append(7,20);
-// newList.prepend(55,2);
-// newList.updateValue(2, 67777)
+// newList.append(1, 1);
+// newList.append(1, 2);
+// newList.append(4, 4);
+// newList.append(5, 1);
+// newList.append(6, 2);
+// newList.append(7, 20);
+// newList.removeAt(0);
+// newList.prepend(22, 44)
 
-// console.log(newList.toString());
 
+// console.log(newList);

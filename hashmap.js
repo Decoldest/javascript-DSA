@@ -54,11 +54,12 @@ class Hashmap {
     const currentHashList = this.getBucket(key);
     const index = currentHashList.findKey(key);
 
-    if (index != null) {
+    if (index !== null) {
       this.totalSize--;
+      currentHashList.removeAt(index);
+      return true;
     }
-
-    return currentHashList.removeAt(index);
+    return false;
   }
 
   length() {
@@ -102,10 +103,17 @@ class Hashmap {
 
 let test = new Hashmap();
 
-// for (let i = 0; i < 24; i++) {
+// for (let i = 0; i <= 1; i++) {
 //   let temp = "key" + i;
 //   test.set(temp, i);
 // }
+// test.set("key1", 1);
+// test.set("key2", 1);
+// test.set("key43", 3);
 
-// console.log(test);
+// // console.log(test);
+// //console.log(test.remove("key1"));
+// // test.entries();
+// test.remove("key1");
+
 // console.log(test.entries());
