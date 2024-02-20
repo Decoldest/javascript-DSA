@@ -71,18 +71,6 @@ class LinkedList {
     this.tailNode.next = null;
   }
 
-  contains(value) {
-    let current = this.headNode;
-
-    while (current) {
-      if (current.value === value) {
-        return true;
-      }
-      current = current.next;
-    }
-    return false;
-  }
-
   find(value) {
     let index = 0;
 
@@ -96,6 +84,44 @@ class LinkedList {
       index++;
     }
     return null;
+  }
+
+  contains(value) {
+    return this.find(value) !== null;
+  }
+
+  insertAt(value, index) {
+    if (index > this.nodeSize) {
+      return "Invalid index";
+    }
+    this.nodeSize++;
+    if (index === 0) {
+      this.prepend(value)
+    } else {
+      const newNode = new Node(value, null);
+
+      const nodeBefore = this.at(index - 1);
+      const nodeAfter = this.at(index);
+
+      newNode.next = nodeAfter;
+      nodeBefore.next = newNode;
+    }
+  }
+
+  removeAt (index) {
+    if (index > this.nodeSize - 1) {
+      return "Invalid index";
+    }
+    if (index === this.nodeSize - 1) {
+      this.pop();
+    } else if (index === 0) {
+      this.headNode = this.headNode.next;
+    } else {
+      const nodeBefore = this.at(index - 1);
+      const removeNode = this.at(index);
+      console.log(nodeBefore);
+      nodeBefore.next = removeNode.next;
+    }
   }
 
   toString() {
@@ -119,9 +145,12 @@ class LinkedList {
 // newList.append(4);
 // newList.append(5);
 // newList.append(6);
-// newList.pop();
-// newList.prepend(999)
-// console.log(newList.find(77));
-// console.log(newList.contains(6));
+// newList.append(7);
+// newList.insertAt(999, 2);
+// console.log(newList.toString());
+
+// console.log(newList.size());
+
+// newList.removeAt(6);
 
 // console.log(newList.toString());
