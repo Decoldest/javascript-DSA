@@ -1,5 +1,6 @@
 class Node {
-  constructor(value = null, next = null) {
+  constructor(key = null, value = null, next = null) {
+    this.key = key;
     this.value = value;
     this.next = next;
   }
@@ -12,21 +13,21 @@ class LinkedList {
     this.tailNode = null;
   }
 
-  append(value) {
+  append(key, value) {
     if (!this.headNode) {
-      this.prepend(value);
+      this.prepend(key, value);
     } else {
       this.nodeSize++;
 
-      const newNode = new Node(value, null);
+      const newNode = new Node(key, value, null);
       this.tailNode.next = newNode;
       this.tailNode = newNode;
     }
   }
 
-  prepend(value) {
+  prepend(key, value) {
     this.nodeSize++;
-    const newNode = new Node(value, null);
+    const newNode = new Node(key, value, null);
 
     if (!this.headNode) {
       this.headNode = newNode;
@@ -51,7 +52,7 @@ class LinkedList {
 
   at(index) {
     if (!this.headNode || index > this.nodeSize) {
-      return -1;
+      return null;
     }
 
     let temp = this.headNode;
@@ -86,19 +87,43 @@ class LinkedList {
     return null;
   }
 
-  contains(value) {
-    return this.find(value) !== null;
+  findKey(key) {
+    let index = 0;
+
+    let current = this.headNode;
+
+    while (current) {
+      if (current.key === key) {
+        return index;
+      }
+      current = current.next;
+      index++;
+    }
+    return null;
   }
 
-  insertAt(value, index) {
+  contains(value) {
+    return this.find(value) !== null;
+  } 
+
+  containsKey(key) {
+    return this.findKey(key) !== null;
+  }
+
+  updateValue(index, newValue) {
+    const updateNode = this.at(index);
+    updateNode.value = newValue;
+  }
+
+  insertAt(key, value, index) {
     if (index > this.nodeSize) {
       return "Invalid index";
     }
     this.nodeSize++;
     if (index === 0) {
-      this.prepend(value);
+      this.prepend(key, value);
     } else {
-      const newNode = new Node(value, null);
+      const newNode = new Node(key, value, null);
 
       const nodeBefore = this.at(index - 1);
       const nodeAfter = this.at(index);
@@ -109,8 +134,9 @@ class LinkedList {
   }
 
   removeAt(index) {
-    if (index > this.nodeSize - 1) {
-      return "Invalid index";
+    if (!index || index > this.nodeSize - 1) {
+      console.log("false bitch");
+      return false;
     }
     if (index === this.nodeSize - 1) {
       this.pop();
@@ -122,6 +148,40 @@ class LinkedList {
       console.log(nodeBefore);
       nodeBefore.next = removeNode.next;
     }
+    return true;
+  }
+
+  getAllKeys() {
+    let keysArray = [];
+    let current = this.headNode;
+
+    while (current) {
+      keysArray.push(current.key);
+      current = current.next;
+    }
+    return keysArray;
+  }
+
+  getAllValues() {
+    let valuesArray = [];
+    let current = this.headNode;
+
+    while (current) {
+      valuesArray.push(current.value);
+      current = current.next;
+    }
+    return valuesArray;
+  }
+
+  getAllKeyValuePairs() {
+    let keyValuePairs = [];
+    let current = this.headNode;
+
+    while (current) {
+      keyValuePairs.push([current.key, current.value]);
+      current = current.next;
+    }
+    return keyValuePairs;
   }
 
   toString() {
@@ -129,7 +189,7 @@ class LinkedList {
     let resultString = "";
 
     while (current) {
-      resultString += `( ${current.value} ) -> `;
+      resultString += `( key:${current.key} value:${current.value} ) -> `;
       current = current.next;
     }
     resultString += "null";
@@ -138,19 +198,17 @@ class LinkedList {
   }
 }
 
-let test = new Node();
+module.exports = LinkedList;
+
 let newList = new LinkedList();
-newList.append(1);
-newList.append(1);
-newList.append(4);
-newList.append(5);
-newList.append(6);
-newList.append(7);
-newList.insertAt(999, 2);
-console.log(newList.toString());
+// newList.append(1,1);
+// newList.append(1,2);
+// newList.append(4,4);
+// newList.append(5,1);
+// newList.append(6,2);
+// newList.append(7,20);
+// newList.prepend(55,2);
+// newList.updateValue(2, 67777)
 
-console.log(newList.size());
+// console.log(newList.toString());
 
-newList.removeAt(6);
-
-console.log(newList.toString());
